@@ -1,6 +1,8 @@
-import { 
-  Route, createBrowserRouter, 
-  createRoutesFromElements, RouterProvider 
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
 } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
@@ -11,60 +13,59 @@ import AddJobPage from './pages/AddJobPage';
 import EditJobPage from './pages/EditJobPage';
 
 const App = () => {
-  // Get jobs from localStorage or fetch from json
-  const getJobs = async () => {
-    const local = localStorage.getItem('jobs');
-    if (local) {
-      return JSON.parse(local);
-    } else {
-      const res = await fetch('/jobs.json');
-      const jobs = await res.json();
-      localStorage.setItem('jobs', JSON.stringify(jobs));
-      return jobs;
-    }
+  // Add New Job
+  const addJob = async (newJob) => {
+    const res = await fetch('/api/jobs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newJob),
+    });
+    return;
   };
 
-  //Add New Job
-  const addJob = async (newJob) => {
-    const jobs = await getJobs();
-    const updatedJobs = [...jobs, { ...newJob, id: Date.now().toString() }];
-    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
-    return;
-  }
-
-  //Delete Job
+  // Delete Job
   const deleteJob = async (id) => {
-    const jobs = await getJobs();
-    const updatedJobs = jobs.filter(job => job.id !== id);
-    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
+    const res = await fetch(`/api/jobs/${id}`, {
+      method: 'DELETE',
+    });
     return;
-  }
+  };
 
-  //Update Job
+  // Update Job
   const updateJob = async (job) => {
-    const jobs = await getJobs();
-    const updatedJobs = jobs.map(j => j.id === job.id ? job : j);
-    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
+    const res = await fetch(`/api/jobs/${job.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(job),
+    });
     return;
-  }
+  };
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<MainLayout />}>
-      <Route index element={<HomePage />}/>
-      <Route path='/jobs' element={<JobsPage/>}/>
-      <Route path='/add-job' element={<AddJobPage addJobSubmit={addJob} />}/>
-      <Route path='/edit-job/:id' element={<EditJobPage updateJobSubmit={updateJob}/>} loader={jobLoader} />
-      <Route path='/jobs/:id' element={<JobPage deleteJob={deleteJob}/>} loader={jobLoader} />
-      <Route path='*' element={<NotFoundPage/>}/>
-    </Route> 
-   )
-)
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path='/jobs' element={<JobsPage />} />
+        <Route path='/add-job' element={<AddJobPage addJobSubmit={addJob} />} />
+        <Route
+          path='/edit-job/:id'
+          element={<EditJobPage updateJobSubmit={updateJob} />}
+          loader={jobLoader}
+        />
+        <Route
+          path='/jobs/:id'
+          element={<JobPage deleteJob={deleteJob} />}
+          loader={jobLoader}
+        />
+        <Route path='*' element={<NotFoundPage />} />
+      </Route>
+    )
+  );
 
-  return <RouterProvider 
-  router={router} 
-  fallbackElement={<div>Please wait, fetching jobs....</div>}
-  />
-}
-
-export default App
+  return <RouterProvider router={router} />;
+};
+export default App;

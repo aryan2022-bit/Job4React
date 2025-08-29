@@ -1,19 +1,18 @@
-import React from 'react'
-import { RingLoader } from 'react-spinners'
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const override = {
-    display: 'block',
-    margin: '100px auto'
-}
+  display: 'block',
+  margin: '100px auto',
+};
+
 const Spinner = ({ loading }) => {
   return (
-    <RingLoader
-        color='#4338ca'
-        loading={loading}
-        cssOverride={override}
-        size={150}
+    <ClipLoader
+      color='#4338ca'
+      loading={loading}
+      cssOverride={override}
+      size={150}
     />
-  )
-}
-
-export default Spinner
+  );
+};
+export default Spinner;
