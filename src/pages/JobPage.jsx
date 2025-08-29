@@ -146,9 +146,18 @@ const JobPage = ({ deleteJob }) => {
 }
 
 const jobLoader = async ({ params }) => { 
-    const res = await fetch(`/api/jobs/${params.id}`);
-    const data = await res.json();
-    return data;
-}
+    const local = localStorage.getItem('jobs');
+    if (local) {
+      const jobs = JSON.parse(local);
+      const job = jobs.find(job => job.id === params.id);
+      return job;
+    } else {
+      const res = await fetch('/jobs.json');
+      const jobs = await res.json();
+      localStorage.setItem('jobs', JSON.stringify(jobs));
+      const job = jobs.find(job => job.id === params.id);
+      return job;
+    }
+};
 
 export { JobPage as default, jobLoader }

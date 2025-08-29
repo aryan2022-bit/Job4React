@@ -8,17 +8,23 @@ const JobListings = ({isHome = false}) => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect( () =>{
+  useEffect(() => {
     const fetchJobs = async () => {
-      const apiUrl = isHome ? '/api/jobs?_limit=3' : '/api/jobs'
-      
       try {
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        setJobs(data);
+        let data;
+        const local = localStorage.getItem('jobs');
+        if (local) {
+          data = JSON.parse(local);
+        } else {
+          const res = await fetch('/jobs.json');
+          data = await res.json();
+          localStorage.setItem('jobs', JSON.stringify(data));
+        }
+        // If on home page, limit to 3 jobs
+        setJobs(isHome ? data.slice(0, 3) : data);
       } catch (error) {
-        console.log('Error fetching data !',error);
-      } finally{
+        console.log('Error fetching data!', error);
+      } finally {
         setLoading(false);
       }
     }

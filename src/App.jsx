@@ -11,35 +11,40 @@ import AddJobPage from './pages/AddJobPage';
 import EditJobPage from './pages/EditJobPage';
 
 const App = () => {
+  // Get jobs from localStorage or fetch from json
+  const getJobs = async () => {
+    const local = localStorage.getItem('jobs');
+    if (local) {
+      return JSON.parse(local);
+    } else {
+      const res = await fetch('/jobs.json');
+      const jobs = await res.json();
+      localStorage.setItem('jobs', JSON.stringify(jobs));
+      return jobs;
+    }
+  };
+
   //Add New Job
-  const addJob = async (newJob) =>{
-    const res = await fetch('/api/jobs',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newJob),
-    })
+  const addJob = async (newJob) => {
+    const jobs = await getJobs();
+    const updatedJobs = [...jobs, { ...newJob, id: Date.now().toString() }];
+    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
     return;
-}
+  }
 
   //Delete Job
   const deleteJob = async (id) => {
-    const res = await fetch(`/api/jobs/${id}`,{
-      method: 'DELETE'
-    })
+    const jobs = await getJobs();
+    const updatedJobs = jobs.filter(job => job.id !== id);
+    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
     return;
   }
 
   //Update Job
   const updateJob = async (job) => {
-    const res = await fetch(`/api/jobs/${job.id}`,{
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(job),
-    })
+    const jobs = await getJobs();
+    const updatedJobs = jobs.map(j => j.id === job.id ? job : j);
+    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
     return;
   }
 
