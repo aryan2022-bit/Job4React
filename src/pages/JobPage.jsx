@@ -111,10 +111,26 @@ const JobPage = ({ deleteJob }) => {
   );
 };
 
+// const jobLoader = async ({ params }) => {
+//   const res = await fetch(`/api/jobs/${params.id}`);
+//   const data = await res.json();
+//   return data;
+// };
+
 const jobLoader = async ({ params }) => {
-  const res = await fetch(`/api/jobs/${params.id}`);
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch(
+      `https://job4react-json-server.onrender.com/jobs/${params.id}`
+    );
+
+    if (!res.ok) throw new Error('Job not found');
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null; // handle gracefully in your component
+  }
 };
 
 export { JobPage as default, jobLoader };
