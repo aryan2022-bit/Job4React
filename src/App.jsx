@@ -12,38 +12,63 @@ import JobPage, { jobLoader } from './pages/JobPage';
 import AddJobPage from './pages/AddJobPage';
 import EditJobPage from './pages/EditJobPage';
 
+const BASE_URL = 'https://job4react-json-server.onrender.com/jobs';
+
 const App = () => {
-  // Add New Job
-  const addJob = async (newJob) => {
-    const res = await fetch('/api/jobs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newJob),
-    });
-    return;
-  };
+  // // Add New Job
+  // const addJob = async (newJob) => {
+  //   const res = await fetch('/api/jobs', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(newJob),
+  //   });
+  //   return;
+  // };
 
-  // Delete Job
-  const deleteJob = async (id) => {
-    const res = await fetch(`/api/jobs/${id}`, {
-      method: 'DELETE',
-    });
-    return;
-  };
+  // // Delete Job
+  // const deleteJob = async (id) => {
+  //   const res = await fetch(`/api/jobs/${id}`, {
+  //     method: 'DELETE',
+  //   });
+  //   return;
+  // };
 
-  // Update Job
-  const updateJob = async (job) => {
-    const res = await fetch(`/api/jobs/${job.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(job),
-    });
-    return;
-  };
+  // // Update Job
+  // const updateJob = async (job) => {
+  //   const res = await fetch(`/api/jobs/${job.id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(job),
+  //   });
+  //   return;
+  // };
+
+  const BASE_URL = 'https://job4react-json-server.onrender.com/jobs';
+
+const addJob = async (newJob) => {
+  await fetch(`${BASE_URL}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newJob),
+  });
+};
+
+const deleteJob = async (id) => {
+  await fetch(`${BASE_URL}/${id}`, { method: 'DELETE' });
+};
+
+const updateJob = async (job) => {
+  await fetch(`${BASE_URL}/${job.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(job),
+  });
+};
+
 
   const router = createBrowserRouter(
     createRoutesFromElements(
