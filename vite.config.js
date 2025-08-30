@@ -8,8 +8,8 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api':{
-        // target: 'http://localhost:5000',
-        target: 'https://job4react-json-server.onrender.com',
+        target: 'http://localhost:5000',
+        // target: 'https://job4react-json-server.onrender.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/,'')
       }
