@@ -47,8 +47,6 @@ const App = () => {
   //   return;
   // };
 
-  const BASE_URL = 'https://job4react-json-server.onrender.com/jobs';
-
 const addJob = async (newJob) => {
   await fetch(`${BASE_URL}`, {
     method: 'POST',
