@@ -6,26 +6,39 @@ const JobListings = ({ isHome = false }) => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+   const BASE_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchJobs = async () => {
       // const apiUrl = isHome ? '/api/jobs?_limit=3' : '/api/jobs';
-      const apiUrl = isHome 
-    ? 'https://job4react-json-server.onrender.com/jobs?_limit=3'
-    : 'https://job4react-json-server.onrender.com/jobs';
+      const apiUrl = isHome
+        ? `${BASE_URL}/jobs?_limit=3`
+        : `${BASE_URL}/jobs`;
 
-      try {
+      // try {
+      //   const res = await fetch(apiUrl);
+      //   const data = await res.json();
+      //   setJobs(data);
+      // } catch (error) {
+      //   console.log('Error fetching data', error);
+      // } finally {
+      //   setLoading(false);
+      // }
+
+       try {
         const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error('Failed to fetch jobs');
         const data = await res.json();
         setJobs(data);
       } catch (error) {
-        console.log('Error fetching data', error);
+        console.error('Error fetching jobs:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchJobs();
-  }, []);
+  }, [isHome, BASE_URL]);
 
   return (
     <section className='bg-blue-50 px-4 py-10'>
