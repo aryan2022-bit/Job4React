@@ -1,12 +1,58 @@
-# React + Vite
+# 💼 Job4React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple job listing web application built with **React.js** and deployed on **Vercel**.  
+This project allows users to browse, view, and manage job postings with a clean and user-friendly interface.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- 🔎 Browse available job listings  
+- 📝 Add, edit, and delete job posts  
+- 📄 View detailed job descriptions  
+- 🎨 Responsive UI with modern styling (Tailwind CSS)  
+- ⚡ Fast deployment on **Vercel**  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+- **Frontend:** React.js, React Router  
+- **Styling:** Tailwind CSS  
+- **Deployment:** Vercel  
+- **Version Control:** Git & GitHub  
+
+---
+
+## 📂 Project Structure
+ ```Job4React/
+│── public/         # Static files
+│── src/
+│ ├── components/   # Reusable components
+│ ├── pages/        # Page-level components
+│ ├── App.jsx       # Main App component
+│ └── main.jsx      # Entry point
+│── package.json
+│── README.md
+│── .env            # Environment variables
+```
+
+---
+
+## 🌐 Live Demo
+The project is deployed on Vercel:  
+👉 **[Job4React Live](https://job4-react-app.vercel.app/)**  
+
+---
+
+## 🤝 Contributing
+Contributions are always welcome!  
+
+1. Fork the repo  
+2. Create a new branch (`feature-branch`)  
+3. Commit your changes  
+4. Open a Pull Request  
+
+---
+
+## 👤 Author
+**Aryan Prasad**  
+🔗 GitHub: [aryan2022-bit](https://github.com/aryan2022-bit)  
